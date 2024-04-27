@@ -1,0 +1,306 @@
+package abc;
+
+import java.util.Random;
+
+import java.util.List;
+
+import java.util.ArrayList;
+
+import java.util.HashSet;
+
+import java.util.Set;
+
+import java.util.Scanner;
+
+
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        BinaryTree binaryTree = new BinaryTree();
+
+        Scanner scanner = new Scanner(System.in);
+
+
+
+        int choice;
+
+        do {
+
+            System.out.println("Menu:");
+
+            System.out.println("1. Add a song to the Music Player");
+
+            System.out.println("2. Play a random song");
+
+            System.out.println("3. Play/Pause a particular song");
+
+            System.out.println("4. Skip backward");
+
+            System.out.println("5. Skip forward");
+
+            System.out.println("6. Adjust volume control");
+
+            System.out.println("7. History");
+
+            System.out.println("8. Exit");
+
+            System.out.print("Enter your choice: ");
+
+            choice = scanner.nextInt();
+
+            
+
+            switch (choice) {
+
+                case 1:
+
+                    // Add a song to the Music Player
+
+                    System.out.println("Enter user name: ");
+
+                    scanner.nextLine(); // Consume newline character
+
+                    String userName = scanner.nextLine();
+
+                    System.out.println("Enter song title: ");
+
+                    String title = scanner.nextLine();
+
+                    System.out.println("Enter artist: ");
+
+                    String artist = scanner.nextLine();
+
+                    System.out.println("Enter duration (in seconds): ");
+
+                    int duration = scanner.nextInt();
+
+                    binaryTree.insert(userName, new Song(title, artist, duration));
+
+                    break;
+
+                case 2:
+
+                    // Play a random song
+
+                    System.out.println("Enter user name: ");
+
+                    scanner.nextLine(); // Consume newline character
+
+                    String user = scanner.nextLine();
+
+                    binaryTree.playRandomSong(user);
+
+                    break;
+
+                case 3:
+
+                    // Play/Pause a particular song
+
+                    System.out.println("Enter user name: ");
+
+                    scanner.nextLine(); // Consume newline character
+
+                    String userPlayPause = scanner.nextLine();
+
+                    System.out.println("Enter song title: ");
+
+                    String songTitle = scanner.nextLine();
+
+                    // Find the user node
+
+                    TreeNode userNodePlayPause = binaryTree.findUser(binaryTree.getRoot(), userPlayPause);
+
+                    if (userNodePlayPause != null) {
+
+                        // Find the song in the user's playlist
+
+                    	List<Song> songList = userNodePlayPause.getSongs();
+
+                    	ArrayList<Song> songs = new ArrayList<>(songList);
+
+
+
+                        boolean songFound = false;
+
+                        for (Song song : songs) {
+
+                            if (song.getTitle().equals(songTitle)) {
+
+                                songFound = true;
+
+                                // Toggle the play/pause state of the song
+
+                                song.togglePlaying();
+
+                                // Print the current state
+
+                                System.out.println("Current state: " + (song.isPlaying() ? "Playing" : "Paused"));
+
+                                break;
+
+                            }
+
+                        }
+
+                        if (!songFound) {
+
+                            System.out.println("Song not found in the user's playlist.");
+
+                        }
+
+                    } else {
+
+                        System.out.println("User not found.");
+
+                    }
+
+                    break;
+
+
+
+                case 4:
+
+                    // Skip backward
+
+                    System.out.println("Enter user name: ");
+
+                    scanner.nextLine(); // Consume newline character
+
+                    String userBackward = scanner.nextLine();
+
+                    // Find the user node
+
+                    TreeNode userNodeBackward = binaryTree.findUser(binaryTree.getRoot(), userBackward);
+
+                    if (userNodeBackward != null) {
+
+                        System.out.println("Skipping backward for user: " + userBackward);
+
+                        // Implement skip backward logic here
+
+                    } else {
+
+                        System.out.println("User not found.");
+
+                    }
+
+                    break;
+
+                case 5:
+
+                    // Skip forward
+
+                    System.out.println("Enter user name: ");
+
+                    scanner.nextLine(); // Consume newline character
+
+                    String userForward = scanner.nextLine();
+
+                    // Find the user node
+
+                    TreeNode userNodeForward = binaryTree.findUser(binaryTree.getRoot(), userForward);
+
+                    if (userNodeForward != null) {
+
+                        System.out.println("Skipping forward for user: " + userForward);
+
+                        // Implement skip forward logic here
+
+                    } else {
+
+                        System.out.println("User not found.");
+
+                    }
+
+                    break;
+
+                case 6:
+
+                    // Adjust volume control
+
+                    System.out.println("\n-- Adjust volume control --");
+
+                    System.out.print("Enter user name: ");
+
+                    scanner.nextLine(); // Consume newline character
+
+                    String userVolume = scanner.nextLine();
+
+                    System.out.print("Enter volume level (0-100): ");
+
+                    int volumeLevel = scanner.nextInt();
+
+                    // Find the user node and adjust volume
+
+                    binaryTree.adjustVolume(userVolume, volumeLevel);
+
+                    break;
+
+      
+
+                case 7:
+
+                    // View history of played songs
+
+                    System.out.println("\n-- View History of Played Songs --");
+
+                    System.out.print("Enter user name: ");
+
+                    scanner.nextLine(); // Consume newline character
+
+                    String userHistory = scanner.nextLine();
+
+                    TreeNode userNodeHistory = binaryTree.findUser(binaryTree.getRoot(), userHistory);
+
+                    if (userNodeHistory != null) {
+
+                        List<Song> history = userNodeHistory.getHistory();
+
+                        if (!history.isEmpty()) {
+
+                            System.out.println("History of played songs for user " + userHistory + ":");
+
+                            for (Song song : history) {
+
+                                System.out.println("- " + song.getTitle() + " by " + song.getArtist());
+
+                            }
+
+                        } else {
+
+                            System.out.println("No songs played yet for user: " + userHistory);
+
+                        }
+
+                    } else {
+
+                        System.out.println("User not found.");
+
+                    }
+
+                    break;
+
+                case 8:
+
+                    System.out.println("Exiting...");
+
+                    break;
+
+                default:
+
+                    System.out.println("Invalid choice. Please enter a number between 1 and 8.");
+
+            }
+
+        } while (choice != 7);
+
+
+
+        scanner.close();
+
+    }
+
+}
+
