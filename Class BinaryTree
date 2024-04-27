@@ -1,0 +1,173 @@
+package abc;
+
+import java.util.Random;
+
+import java.util.List;
+
+import java.util.ArrayList;
+
+import java.util.HashSet;
+
+import java.util.Set;
+
+import java.util.Scanner;
+
+class BinaryTree {
+
+    private TreeNode root;
+
+
+    public BinaryTree() {
+
+        root = null;
+
+    }
+
+    public TreeNode getRoot() {
+
+        return root;
+
+    }
+
+
+    public void insert(String userName, Song song) {
+
+        root = insertRecursive(root, userName, song);
+
+    }
+
+
+    private TreeNode insertRecursive(TreeNode current, String userName, Song song) {
+
+        if (current == null) {
+
+            return new TreeNode(userName, song);
+
+        }
+
+
+        if (userName.compareTo(current.getUserName()) < 0) {
+
+            current.setLeftChild(insertRecursive(current.getLeftChild(), userName, song));
+
+        } else if (userName.compareTo(current.getUserName()) > 0) {
+
+            current.setRightChild(insertRecursive(current.getRightChild(), userName, song));
+
+        } else {
+
+            // User already exists, add song to the existing user
+
+            current.addSong(song);
+
+        }
+
+
+        return current;
+
+    }
+
+    public void adjustVolume(String userName, int volumeLevel) {
+
+        TreeNode userNode = findUser(root, userName);
+
+        if (userNode != null) {
+
+            System.out.println("Adjusting volume control for user: " + userName);
+
+            // Update the volume level for the user's playlist
+
+            userNode.setVolumeLevel(volumeLevel);
+
+            System.out.println("Volume level adjusted to: " + volumeLevel);
+
+        } else {
+
+            System.out.println("User not found.");
+
+        }
+
+    }
+
+
+
+    public void playRandomSong(String userName) {
+
+        TreeNode userNode = findUser(root, userName);
+
+        if (userNode != null) {
+
+            playRandomSongRecursive(userNode, new HashSet<>());
+
+        } else {
+
+            System.out.println("User not found");
+
+        }
+
+    }
+    
+
+    private void playRandomSongRecursive(TreeNode node, Set<String> playedSongs) {
+
+        if (node != null) {
+
+            List<Song> songs = node.getSongs();
+
+            songs.removeAll(playedSongs);
+
+
+            if (!songs.isEmpty()) {
+
+                Random random = new Random();
+
+                int randomIndex = random.nextInt(songs.size());
+
+                Song randomSong = songs.get(randomIndex);
+
+                playedSongs.add(randomSong.getTitle());
+
+                System.out.println("Playing: " + randomSong.getTitle());        
+
+                // Add the played song to history
+
+                node.addToHistory(randomSong);
+
+            } else {
+
+                System.out.println("No more songs available for user: " + node.getUserName());
+
+            }
+
+        }
+
+    }
+
+
+    public TreeNode findUser(TreeNode current, String userName) {
+
+        if (current == null) {
+
+            return null;
+
+        }
+
+        if (userName.equals(current.getUserName())) {
+
+            return current;
+
+        }
+
+        if (userName.compareTo(current.getUserName()) < 0) {
+
+            return findUser(current.getLeftChild(), userName);
+
+        } else {
+
+            return findUser(current.getRightChild(), userName);
+
+        }
+
+    }
+
+}
