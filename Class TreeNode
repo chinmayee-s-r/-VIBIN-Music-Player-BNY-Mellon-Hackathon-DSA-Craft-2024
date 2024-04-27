@@ -1,0 +1,137 @@
+package abc;
+
+import java.util.Random;
+
+import java.util.List;
+
+import java.util.ArrayList;
+
+import java.util.HashSet;
+
+import java.util.Set;
+
+import java.util.Scanner;
+
+
+
+class TreeNode {
+
+    private String userName;
+
+    private List<Song> songs;
+
+    private List<Song> history; // List to store history of played songs
+
+    private TreeNode leftChild;
+
+    private TreeNode rightChild;
+
+    private int volumeLevel;
+
+
+    public TreeNode(String userName, Song song) {
+
+        this.userName = userName;
+
+        this.songs = new ArrayList<>();
+
+        this.history = new ArrayList<>(); // Initialize history list
+
+        this.songs.add(song);
+
+        this.leftChild = null;
+
+        this.rightChild = null;
+
+        this.volumeLevel = 50;
+
+    }
+
+
+    public String getUserName() {
+
+        return userName;
+
+    }
+
+
+    public List<Song> getSongs() {
+
+        return songs;
+
+    }
+
+
+    public List<Song> getHistory() {
+
+        return history;
+
+    }
+
+
+    public TreeNode getLeftChild() {
+
+        return leftChild;
+
+    }
+
+
+    public void setLeftChild(TreeNode leftChild) {
+
+        this.leftChild = leftChild;
+
+    }
+
+
+    public TreeNode getRightChild() {
+
+        return rightChild;
+
+    }
+
+
+    public void setRightChild(TreeNode rightChild) {
+
+        this.rightChild = rightChild;
+
+    }
+
+
+    public void addSong(Song song) {
+
+        this.songs.add(song);
+
+    }
+
+
+    public int getVolumeLevel() {
+
+        return volumeLevel;
+
+    }
+
+
+    public void setVolumeLevel(int volumeLevel) {
+
+        if (volumeLevel >= 0 && volumeLevel <= 100) {
+
+            this.volumeLevel = volumeLevel;
+
+        } else {
+
+            System.out.println("Volume level must be between 0 and 100.");
+
+        }
+
+    }
+
+
+    // Method to add played song to history
+
+    public void addToHistory(Song song) {
+
+        history.add(song);
+
+    }
+
+}
