@@ -1,0 +1,68 @@
+package abc;
+
+import java.util.Random;
+
+import java.util.List;
+
+import java.util.ArrayList;
+
+import java.util.HashSet;
+
+import java.util.Set;
+
+import java.util.Scanner;
+
+
+
+class Song {
+
+    private String title;
+
+    private String artist;
+
+    private int duration; // in seconds
+
+    private boolean playing; // indicates whether the song is currently playing or paused
+
+    public Song(String title, String artist, int duration) {
+
+        this.title = title;
+
+        this.artist = artist;
+
+        this.duration = duration;
+
+        this.playing = false; // by default, song is not playing
+
+    }
+
+
+    public String getTitle() {
+
+        return title;
+
+    }
+
+
+    public String getArtist() {
+
+        return artist;
+
+    }
+
+
+    public boolean isPlaying() {
+
+        return playing;
+
+    }
+
+
+    public void togglePlaying() {
+
+        playing = !playing; // toggles the playing state
+
+    }
+
+}
+
