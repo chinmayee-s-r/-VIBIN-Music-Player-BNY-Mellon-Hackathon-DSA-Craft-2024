@@ -1,4 +1,4 @@
-# -VIBIN-Music-Player-BNY-Mellon-Hackathon-DSA-Craft-2024
+# VIBIN-Music-Player-BNY-Mellon-Hackathon-DSA-Craft-2024
 ‘VIBIN’ Music Player BNY Mellon Hackathon DSA Craft 2024 : 
 1. Stood 2nd among 200+ teams.
 2. Music Player created using Binary Search Tree, HashSet, and ArrayList in Java.
